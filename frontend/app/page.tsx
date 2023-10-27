@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import React, { useState, useRef } from "react";
-import { SendHorizonalIcon, HeadphonesIcon } from "lucide-react";
+import React, { useState } from "react";
+import { SendHorizonalIcon, HeadphonesIcon, MicIcon } from "lucide-react";
 import axios from "axios";
 
 interface Message {
@@ -75,9 +75,14 @@ const HomePage = () => {
             <SendHorizonalIcon />
           </Button>
           <Button>
+            <MicIcon />
+          </Button>
+          <Button>
             <HeadphonesIcon onClick={GetVoiceRespond} />
           </Button>
-          {audio && <audio controls src={`data:audio/mpeg;base64,${audio}`} autoPlay/>}
+          {audio && (
+            <audio controls src={`data:audio/mpeg;base64,${audio}`} autoPlay />
+          )}
         </span>
       </div>
     </div>
