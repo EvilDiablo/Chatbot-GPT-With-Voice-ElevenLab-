@@ -1,15 +1,30 @@
-import base64
-from fastapi import FastAPI, Form
-from pydantic import BaseModel
-from utils import get_response, get_voice
-from elevenlabs import generate, set_api_key,play
-from fastapi.middleware.cors import CORSMiddleware
+import os
 import uvicorn
+import time
 
-app = FastAPI()
+from fastapi import FastAPI, Request, Response, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+
+# from core.logging import logger
+from typing import Any, Callable, TypeVar
+
+from routers.thinker import router as information_thinker
+from routers.diagnosis_assistant import router as diagnosis_assistant
+
+app = FastAPI(
+    title="Clinic managment system",
+    docs_url='/docs',
+    redoc_url=None
+)
+
+# app.add_middleware(SessionMiddleware, secret_key=settings.AUTH_SECRET_KEY)
+
+app.include_router(information_thinker, tags = ["Thinker"])
+app.include_router(diagnosis_assistant, tags = ["Assistant"])
 
 origins = [
-    "http://localhost:3000"
+  "http://localhost:3000"
 ]
 
 app.add_middleware(
@@ -20,34 +35,48 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# @app.on_event("startup")
+# async def app_init():
+#     """
+#         initialize crucial application services
+#     """
+#     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).Visions
 
-voice_input_data = None
+#     await init_beanie(
+#         database = db_client,
+#         document_models = [DeepLearning, TrainStore]
 
-@app.get("/")
-async def say_ok():
-    return{"message": "ok"}
 
-@app.post("/chat-response")
-async def generate_chat_response(request: str = Form(...)): 
-    try:
-        responses = get_response(request)  
-        global voice_input_data
-        voice_input_data = responses
+F = TypeVar("F", bound=Callable[..., Any])
 
-        return responses
-    except Exception as e:
-        return {"error": str(e)}
+@app.middleware("http")
+async def process_time_log_middleware(request: Request, call_next: F) -> Response:
+    """
+    Add API process time in response headers and log calls
+    """
+    start_time = time.time()
+    response: Response = await call_next(request)
+    process_time = str(round(time.time() - start_time, 3))
+    response.headers["X-Process-Time"] = process_time
 
+    # logger.info(
+    #     "Method=%s Path=%s StatusCode=%s ProcessTime=%s",
+    #     request.method,
+    #     request.url.path,
+    #     response.status_code,
+    #     process_time,
+    # )
     
-@app.post("/voice-over")
-async def voice_over(voice_data:str = Form(...)):
-    try:
-        responses = get_voice(voice_data)  
+    return response
 
-        return base64.b64encode(responses).decode('utf-8')
-    except Exception as e :
-        return {"error": str(e)}
-    
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000,
-                log_level="info", reload=True)
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(
+        "main:app", 
+        host=host, 
+        port=port, 
+        log_level="debug", 
+        # workers=os.cpu_count(), 
+        reload=True,
+    )
