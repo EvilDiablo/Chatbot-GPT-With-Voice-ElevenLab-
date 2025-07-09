@@ -13,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='relative h-screen w-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black'>
-        {children}
-      </body>
+      <body className='relative h-screen w-full bg-slate-400'>{children}</body>
     </html>
   );
 }

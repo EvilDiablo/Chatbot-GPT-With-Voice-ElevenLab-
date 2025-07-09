@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
-import { SendHorizonalIcon, HeadphonesIcon, MicIcon } from "lucide-react";
+import { SendHorizonalIcon } from "lucide-react";
 import axios from "axios";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Message {
   text: string;
@@ -40,51 +41,39 @@ const HomePage = () => {
     }
   };
 
-  const GetVoiceRespond = async () => {
-    const Input = new FormData();
-    Input.append("voice_data", bot);
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/voice-over",
-        Input
-      );
-      const data = await response.data;
-      setAudio(data);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  };
-
   return (
     <div className='h-full w-full flex flex-col relative p-6'>
-      <div className='h-[85%] overflow-y-auto w-full'>
-        {messages.map((message, index) => (
-          <div key={index} className={`mb-1 text-white text-justify`}>
-            {message.sender === "user" ? "You: " : "Bot: "}
-            {message.text}
+      <Tabs defaultValue='Assistant' className='h-full '>
+        <TabsList>
+          <TabsTrigger value='Assistant'>Assistant</TabsTrigger>
+          <TabsTrigger value='Analyzer'>Analyzer</TabsTrigger>
+        </TabsList>
+        <TabsContent
+          value='Assistant'
+          className='w-full h-[95%] bg-slate-500 rounded-md shadow-2xl'
+        >
+          <div className='h-[85%] w-full p-4'>
+            {messages.map((message, index) => (
+              <div key={index} className={`mb-1 text-white text-justify`}>
+                {message.sender === "user" ? "You: " : "Bot: "}
+                {message.text}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className='sticky bottom-0 w-full h-[15%] items-center flex'>
-        <span className='flex flex-row w-full items-center space-x-2'>
-          <Textarea
-            placeholder='Type your message here!'
-            onChange={(e) => setUser(e.target.value)}
-          />
-          <Button onClick={GetChatRespond}>
-            <SendHorizonalIcon />
-          </Button>
-          <Button>
-            <MicIcon />
-          </Button>
-          <Button>
-            <HeadphonesIcon onClick={GetVoiceRespond} />
-          </Button>
-          {audio && (
-            <audio controls src={`data:audio/mpeg;base64,${audio}`} autoPlay />
-          )}
-        </span>
-      </div>
+          <div className='w-full h-[15%] items-center flex p-4'>
+            <span className='flex flex-row w-full items-center space-x-2'>
+              <Textarea
+                placeholder='Type your message here!'
+                onChange={(e) => setUser(e.target.value)}
+              />
+              <Button onClick={GetChatRespond}>
+                <SendHorizonalIcon />
+              </Button>
+            </span>
+          </div>
+        </TabsContent>
+        <TabsContent value='Analyzer'>Change your password here.</TabsContent>
+      </Tabs>
     </div>
   );
 };
