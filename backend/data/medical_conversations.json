@@ -1,0 +1,77 @@
+{
+  "conversations": {
+    "bd368111-5ca2-4560-84c0-0bc48290a8a4": {
+      "thread_id": "thread_lPN3QbD3Y6fyTFyeubfYRk2t",
+      "patient_context": "",
+      "document_context": "",
+      "title": "Untitled Conversation",
+      "created_at": 1752412717.518582,
+      "last_query": "hi",
+      "messages": [
+        {
+          "sender": "user",
+          "content": "hi",
+          "type": "query",
+          "timestamp": 1752412722.0183833
+        },
+        {
+          "sender": "assistant",
+          "content": "Hello! How can I assist you today with medical information or guidance? Remember, I am here to help, but my advice is not a substitute for professional medical care. Please let me know your questions or concerns!",
+          "type": "response",
+          "timestamp": 1752412722.0238388
+        }
+      ],
+      "conversation_type": "medical",
+      "last_response": "Hello! How can I assist you today with medical information or guidance? Remember, I am here to help, but my advice is not a substitute for professional medical care. Please let me know your questions or concerns!"
+    },
+    "097277a2-5e9e-4c03-877e-0f03189c5c17": {
+      "thread_id": "thread_l72s9Oto6dFydtrxiyA9VwG9",
+      "patient_context": "",
+      "document_context": "",
+      "title": "Untitled Conversation",
+      "created_at": 1752413310.39302,
+      "last_query": "hi",
+      "messages": [
+        {
+          "sender": "user",
+          "content": "hi",
+          "type": "query",
+          "timestamp": 1752413315.2199059
+        },
+        {
+          "sender": "assistant",
+          "content": "Hello! I'm here to assist you with any medical questions or concerns you may have. Please remember, I'm an AI medical assistant and cannot replace professional medical advice, diagnosis, or treatment. Let me know how I can help!",
+          "type": "response",
+          "timestamp": 1752413315.2249231
+        }
+      ],
+      "conversation_type": "medical",
+      "last_response": "Hello! I'm here to assist you with any medical questions or concerns you may have. Please remember, I'm an AI medical assistant and cannot replace professional medical advice, diagnosis, or treatment. Let me know how I can help!"
+    },
+    "320066f9-a054-4eff-9f79-eba1922102bb": {
+      "thread_id": "thread_m4JPqWBSKP7QE7KTQFLn0VAz",
+      "patient_context": "",
+      "document_context": "",
+      "patient_data": null,
+      "title": "Untitled Conversation",
+      "created_at": 1752421607.0887105,
+      "last_query": "hey",
+      "messages": [
+        {
+          "sender": "user",
+          "content": "hey",
+          "type": "query",
+          "timestamp": 1752421611.6382926
+        },
+        {
+          "sender": "assistant",
+          "content": "Hello! How can I assist you today?",
+          "type": "response",
+          "timestamp": 1752421611.6438873
+        }
+      ],
+      "conversation_type": "medical",
+      "last_response": "Hello! How can I assist you today?"
+    }
+  }
+}

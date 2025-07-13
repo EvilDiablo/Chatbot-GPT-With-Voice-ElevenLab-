@@ -11,6 +11,7 @@ from typing import Any, Callable, TypeVar
 
 from routers.thinker import router as information_thinker
 from routers.diagnosis_assistant import router as diagnosis_assistant
+from routers.patient import router as patient_router
 
 app = FastAPI(
     title="Clinic managment system",
@@ -22,6 +23,7 @@ app = FastAPI(
 
 app.include_router(information_thinker, tags = ["Thinker"])
 app.include_router(diagnosis_assistant, tags = ["Assistant"])
+app.include_router(patient_router, prefix="/patients", tags = ["Patients"])
 
 origins = [
   "http://localhost:3000"
